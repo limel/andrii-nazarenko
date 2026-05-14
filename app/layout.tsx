@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
 });
 
@@ -25,9 +20,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${ibmPlexSans.variable} h-full bg-stone-50 antialiased dark:bg-zinc-900`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
+          <div className="anim-blob-1 absolute -left-72 -top-72 h-[800px] w-[800px] rounded-full bg-accent opacity-[0.06] blur-[160px] dark:opacity-[0.10]" />
+          <div className="anim-blob-2 absolute -bottom-72 -right-72 h-[700px] w-[700px] rounded-full bg-[#6d28d9] opacity-[0.04] blur-[140px] dark:opacity-[0.08]" />
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

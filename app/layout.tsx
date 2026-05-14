@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -29,6 +30,7 @@ export default function RootLayout({
           <div className="anim-blob-2 absolute -right-72 -bottom-72 h-175 w-175 rounded-full bg-[#6d28d9] opacity-[0.04] blur-[140px] dark:opacity-[0.08]" />
         </div>
         {children}
+        <Analytics />
       </body>
     </html>
   );

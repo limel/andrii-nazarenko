@@ -8,12 +8,18 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:seed": "node --env-file=.env.local --experimental-strip-types scripts/seed.ts",
+    "db:migrate": "node --env-file=.env.local --experimental-strip-types scripts/migrate-hero-about.ts",
+    "db:migrate:expertise": "node --env-file=.env.local --experimental-strip-types scripts/migrate-expertise.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "jose": "^6.2.3",
     "next": "16.2.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

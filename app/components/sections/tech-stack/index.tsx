@@ -1,39 +1,10 @@
+import { sql } from "@/lib/db";
+
 type TechCategory = {
+  id: number;
   name: string;
   technologies: string[];
 };
-
-const categories: TechCategory[] = [
-  {
-    name: "Frontend",
-    technologies: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3"],
-  },
-  {
-    name: "State Management",
-    technologies: ["Redux Toolkit", "Context API"],
-  },
-  {
-    name: "UI & Styling",
-    technologies: ["Tailwind CSS", "MUI", "Responsive Design", "Reusable UI Components"],
-  },
-  {
-    name: "Architecture",
-    technologies: [
-      "SSR",
-      "API-driven Architecture",
-      "Component-based Architecture",
-      "Frontend Scalability",
-    ],
-  },
-  {
-    name: "Integrations",
-    technologies: ["REST API", "GraphQL", "Analytics", "A/B Testing", "Headless CMS"],
-  },
-  {
-    name: "Tooling",
-    technologies: ["Webpack", "Vite", "Git", "npm", "yarn"],
-  },
-];
 
 function TechCategoryCard({ category }: { category: TechCategory }) {
   return (
@@ -55,23 +26,25 @@ function TechCategoryCard({ category }: { category: TechCategory }) {
   );
 }
 
-function TechStack() {
+export default async function TechStack() {
+  const categories = (await sql`
+    SELECT * FROM tech_categories ORDER BY sort_order, id
+  `) as TechCategory[];
+
   return (
     <section id="tech-stack" className="mx-auto w-full space-y-8 py-6 md:py-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Tech Stack</h2>
-        <p className="text-sm text-foreground/65">
+        <p className="text-sm text-foreground/85">
           Technologies and tools used for building scalable, modern frontend applications.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((category) => (
-          <TechCategoryCard key={category.name} category={category} />
+          <TechCategoryCard key={category.id} category={category} />
         ))}
       </div>
     </section>
   );
 }
-
-export default TechStack;

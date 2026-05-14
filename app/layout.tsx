@@ -24,8 +24,8 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col font-sans">
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
-          <div className="anim-blob-1 absolute -left-72 -top-72 h-[800px] w-[800px] rounded-full bg-accent opacity-[0.06] blur-[160px] dark:opacity-[0.10]" />
-          <div className="anim-blob-2 absolute -bottom-72 -right-72 h-[700px] w-[700px] rounded-full bg-[#6d28d9] opacity-[0.04] blur-[140px] dark:opacity-[0.08]" />
+          <div className="anim-blob-1 bg-accent absolute -top-72 -left-72 h-200 w-200 rounded-full opacity-[0.06] blur-[160px] dark:opacity-[0.10]" />
+          <div className="anim-blob-2 absolute -right-72 -bottom-72 h-175 w-175 rounded-full bg-[#6d28d9] opacity-[0.04] blur-[140px] dark:opacity-[0.08]" />
         </div>
         {children}
       </body>

@@ -1,4 +1,7 @@
+import { sql } from "@/lib/db";
+
 type Project = {
+  id: number;
   name: string;
   description: string;
   responsibilities: string[];
@@ -6,69 +9,14 @@ type Project = {
   tags: string[];
 };
 
-const projects: Project[] = [
-  {
-    name: "Growth Funnel Platform",
-    description:
-      "Scalable frontend architecture for multiple marketing funnels with reusable UI systems, analytics integrations, and API-driven business logic.",
-    responsibilities: [
-      "Developed reusable funnel components and step-based flows",
-      "Integrated analytics and tracking systems",
-      "Worked with A/B testing and experiment-driven UI logic",
-      "Improved maintainability across multiple funnel applications",
-    ],
-    stack: ["React", "TypeScript", "Analytics", "A/B Testing", "REST API"],
-    tags: ["Reusable UI", "Product Funnels", "Analytics", "Performance", "Experimentation"],
-  },
-  {
-    name: "Marketplace Platform",
-    description:
-      "Customer-facing marketplace application with scalable frontend architecture and internal admin functionality.",
-    responsibilities: [
-      "Developed marketplace UI using React and TypeScript",
-      "Integrated API-driven business workflows",
-      "Improved component maintainability and scalability",
-      "Collaborated with backend and product teams",
-    ],
-    stack: ["React", "TypeScript", "REST API", "Marketplace Platform"],
-    tags: ["Marketplace", "API Integration", "Frontend Architecture", "Reusable Components"],
-  },
-  {
-    name: "Admin Dashboard System",
-    description:
-      "Internal dashboard interfaces for operational and product management workflows.",
-    responsibilities: [
-      "Built dashboard components and frontend business logic",
-      "Integrated backend APIs and state management",
-      "Improved internal user experience and maintainability",
-      "Worked within distributed product teams",
-    ],
-    stack: ["React", "Redux", "TypeScript", "Dashboard Systems"],
-    tags: ["Admin Dashboard", "State Management", "Internal Tools", "Product Systems"],
-  },
-  {
-    name: "SEO-Focused Web Platform",
-    description:
-      "Modern Next.js application with headless CMS integration, focused on SEO optimization and scalable content delivery.",
-    responsibilities: [
-      "Developed SEO-friendly frontend architecture",
-      "Integrated headless CMS solutions",
-      "Built reusable and responsive UI components",
-      "Optimized frontend performance",
-    ],
-    stack: ["Next.js", "React", "TypeScript", "Headless CMS", "SEO"],
-    tags: ["Next.js", "SSR", "SEO", "CMS Integration"],
-  },
-];
-
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group flex flex-col gap-5 rounded-xl border border-foreground/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-foreground/2">
+    <article className="group border-foreground/10 hover:border-foreground/20 hover:bg-foreground/2 flex flex-col gap-5 rounded-xl border p-5 transition-all duration-300 hover:-translate-y-0.5">
       {/* Header */}
       <div className="space-y-2">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-base font-medium tracking-tight leading-snug">{project.name}</h3>
-          <span className="mt-0.5 shrink-0 text-foreground/20 transition-colors duration-300 group-hover:text-foreground/40">
+          <h3 className="text-base leading-snug font-medium tracking-tight">{project.name}</h3>
+          <span className="text-foreground/20 group-hover:text-foreground/60 mt-0.5 shrink-0 transition-colors duration-300">
             <svg
               width="14"
               height="14"
@@ -84,14 +32,17 @@ function ProjectCard({ project }: { project: Project }) {
             </svg>
           </span>
         </div>
-        <p className="text-xs leading-relaxed text-foreground/65">{project.description}</p>
+        <p className="text-foreground/85 text-xs leading-relaxed">{project.description}</p>
       </div>
 
       {/* Responsibilities */}
       <ul className="space-y-1.5">
         {project.responsibilities.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-xs leading-relaxed text-foreground/60">
-            <span className="mt-1.75 size-1 shrink-0 rounded-full bg-foreground/20" />
+          <li
+            key={item}
+            className="text-foreground/85 flex items-start gap-2.5 text-xs leading-relaxed"
+          >
+            <span className="bg-foreground/20 mt-1.75 size-1 shrink-0 rounded-full" />
             {item}
           </li>
         ))}
@@ -103,7 +54,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.stack.map((tech) => (
             <span
               key={tech}
-              className="rounded-md bg-foreground/4 px-2 py-0.5 font-mono text-[10px] text-foreground/60 transition-colors duration-300 group-hover:bg-foreground/7 group-hover:text-foreground/75"
+              className="bg-foreground/4 text-foreground/85 group-hover:bg-foreground/7 group-hover:text-foreground/85 rounded-md px-2 py-0.5 font-mono text-[10px] transition-colors duration-300"
             >
               {tech}
             </span>
@@ -115,7 +66,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-foreground/8 px-2 py-0.5 text-[10px] text-foreground/50 transition-colors duration-300 group-hover:border-foreground/15 group-hover:text-foreground/65"
+              className="border-foreground/8 text-foreground/50 group-hover:border-foreground/15 group-hover:text-foreground/65 rounded-md border px-2 py-0.5 text-[10px] transition-colors duration-300"
             >
               {tag}
             </span>
@@ -126,12 +77,16 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-function Projects() {
+export default async function Projects() {
+  const projects = (await sql`
+    SELECT * FROM projects ORDER BY sort_order, id
+  `) as Project[];
+
   return (
     <section id="projects" className="mx-auto w-full space-y-8 py-6 md:py-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Featured Projects</h2>
-        <p className="text-sm text-foreground/65">
+        <p className="text-foreground/65 text-sm">
           Selected frontend projects focused on scalable architecture, product development, and
           modern user experiences.
         </p>
@@ -139,11 +94,9 @@ function Projects() {
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {projects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </section>
   );
 }
-
-export default Projects;

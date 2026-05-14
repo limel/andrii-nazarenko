@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,6 +25,21 @@ export default function RootLayout({
       lang="en"
       className={`${ibmPlexSans.variable} h-full bg-stone-50 antialiased dark:bg-zinc-900`}
     >
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_MEASUREMENT_ID}`}
+      />
+
+      <Script id="" strategy="lazyOnload">
+        {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+              });
+          `}
+      </Script>
       <body className="flex min-h-full flex-col font-sans">
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden">
           <div className="anim-blob-1 bg-accent absolute -top-72 -left-72 h-200 w-200 rounded-full opacity-[0.06] blur-[160px] dark:opacity-[0.10]" />

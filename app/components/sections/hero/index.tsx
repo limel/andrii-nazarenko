@@ -35,7 +35,7 @@ export default async function Hero() {
         {hero.role}
       </h2>
 
-      <p className="text-sm leading-7 text-foreground/75 sm:text-base sm:leading-8">
+      <p className="whitespace-pre-wrap text-sm leading-7 text-foreground/75 sm:text-base sm:leading-8">
         {hero.description}
       </p>
 

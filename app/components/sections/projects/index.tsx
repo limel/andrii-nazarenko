@@ -53,7 +53,7 @@ function ProjectCard({ project }: { project: Project }) {
           />
         </div>
       )}
-
+      <span className="">Responsibilities</span>
       {/* Responsibilities */}
       <ul className="space-y-1.5">
         {project.responsibilities.map((item, i) => (
@@ -66,13 +66,21 @@ function ProjectCard({ project }: { project: Project }) {
           </li>
         ))}
       </ul>
-
+      <span className="">Impact</span>
       {project.impact && (
         <ul className="space-y-1.5">
-          <li className="text-foreground/85 flex items-start gap-2.5 text-xs leading-relaxed">
-            <span className="bg-foreground/20 mt-1.75 size-1 shrink-0 rounded-full" />
-            {project.impact}
-          </li>
+          {project.impact
+            .split("\n")
+            .filter(Boolean)
+            .map((line, i) => (
+              <li
+                key={i}
+                className="text-foreground/85 flex items-start gap-2.5 text-xs leading-relaxed"
+              >
+                <span className="bg-foreground/20 mt-1.75 size-1 shrink-0 rounded-full" />
+                {line}
+              </li>
+            ))}
         </ul>
       )}
 

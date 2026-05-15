@@ -68,9 +68,12 @@ function ProjectCard({ project }: { project: Project }) {
       </ul>
 
       {project.impact && (
-        <p className="text-foreground/60 border-foreground/8 border-l-2 pl-3 text-xs leading-relaxed italic">
-          {project.impact}
-        </p>
+        <ul className="space-y-1.5">
+          <li className="text-foreground/85 flex items-start gap-2.5 text-xs leading-relaxed">
+            <span className="bg-foreground/20 mt-1.75 size-1 shrink-0 rounded-full" />
+            {project.impact}
+          </li>
+        </ul>
       )}
 
       <div className="mt-auto space-y-3">

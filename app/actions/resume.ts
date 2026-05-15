@@ -186,11 +186,12 @@ export async function deleteTechCategory(id: number) {
 export async function createExpertise(formData: FormData) {
   await requireSession();
   await sql`
-    INSERT INTO expertise (title, description, icon_svg, sort_order)
+    INSERT INTO expertise (title, description, icon_svg, icon_viewbox, sort_order)
     VALUES (
       ${formData.get("title")},
       ${formData.get("description")},
       ${formData.get("icon_svg")},
+      ${formData.get("icon_viewbox") || "0 0 24 24"},
       (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM expertise)
     )
   `;
@@ -202,9 +203,10 @@ export async function updateExpertise(id: number, formData: FormData) {
   await requireSession();
   await sql`
     UPDATE expertise SET
-      title       = ${formData.get("title")},
-      description = ${formData.get("description")},
-      icon_svg    = ${formData.get("icon_svg")}
+      title        = ${formData.get("title")},
+      description  = ${formData.get("description")},
+      icon_svg     = ${formData.get("icon_svg")},
+      icon_viewbox = ${formData.get("icon_viewbox") || "0 0 24 24"}
     WHERE id = ${id}
   `;
   revalidatePath("/");

@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS expertise (
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   icon_svg TEXT NOT NULL DEFAULT '',
+  icon_viewbox TEXT NOT NULL DEFAULT '0 0 24 24',
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 

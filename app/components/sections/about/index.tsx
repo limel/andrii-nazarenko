@@ -13,7 +13,10 @@ export default async function About() {
 
       <div className="space-y-3">
         {about.paragraphs.map((p, i) => (
-          <p key={i} className="text-sm leading-7 text-foreground/75 sm:text-base sm:leading-8">
+          <p
+            key={i}
+            className="text-foreground/75 text-sm leading-7 whitespace-pre-wrap sm:text-base sm:leading-8"
+          >
             {p}
           </p>
         ))}

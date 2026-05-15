@@ -3,7 +3,7 @@ import { createExpertise, updateExpertise, deleteExpertise } from "@/app/actions
 import { AdminSection, Field } from "@components/ui/";
 import { DeleteButton } from "@components/ui/";
 
-type ExpertiseRow = { id: number; title: string; description: string; icon_svg: string };
+type ExpertiseRow = { id: number; title: string; description: string; icon_svg: string; icon_viewbox: string };
 
 export default async function ExpertisePage() {
   const rows = (await sql`SELECT * FROM expertise ORDER BY sort_order, id`) as ExpertiseRow[];
@@ -41,13 +41,18 @@ export default async function ExpertisePage() {
                   rows={3}
                   className="w-full rounded-lg border border-foreground/15 bg-transparent px-3 py-2 font-mono text-xs outline-none focus:border-foreground/30"
                 />
-                {/* Live preview */}
+                <Field
+                  name="icon_viewbox"
+                  label="viewBox"
+                  defaultValue={card.icon_viewbox || "0 0 24 24"}
+                />
+                {/* Live preview uses the saved viewBox */}
                 <div className="flex items-center gap-2 pt-1">
                   <span className="text-xs text-foreground/40">Preview:</span>
                   <svg
                     width="18"
                     height="18"
-                    viewBox="0 0 24 24"
+                    viewBox={card.icon_viewbox || "0 0 24 24"}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
@@ -90,6 +95,7 @@ export default async function ExpertisePage() {
               placeholder={`<path d="M12 2 2 7l10 5 10-5-10-5z" />`}
               className="w-full rounded-lg border border-foreground/15 bg-transparent px-3 py-2 font-mono text-xs outline-none focus:border-foreground/30"
             />
+            <Field name="icon_viewbox" label="viewBox" defaultValue="0 0 24 24" />
           </div>
           <button
             type="submit"

@@ -33,6 +33,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <a href="/admin/tech-stack" className="text-foreground/60 hover:text-foreground transition-colors px-2 py-1 rounded">
               Tech Stack
             </a>
+            <a href="/admin/contact" className="text-foreground/60 hover:text-foreground transition-colors px-2 py-1 rounded">
+              Contact
+            </a>
           </nav>
           <form action={logout}>
             <button type="submit" className="text-sm text-foreground/50 hover:text-foreground transition-colors">

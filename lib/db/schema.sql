@@ -65,3 +65,12 @@ CREATE TABLE IF NOT EXISTS about (
   id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
   paragraphs TEXT[] NOT NULL DEFAULT '{}'
 );
+
+CREATE TABLE IF NOT EXISTS contact (
+  id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+  email TEXT,
+  github TEXT,
+  linkedin TEXT,
+  telegram TEXT,
+  twitter TEXT
+);

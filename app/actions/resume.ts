@@ -310,3 +310,20 @@ export async function updateAbout(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin/about");
 }
+
+// ─── Contact ──────────────────────────────────────────────────────────────────
+
+export async function updateContact(formData: FormData) {
+  await requireSession();
+  await sql`
+    UPDATE contact SET
+      email    = ${formData.get("email") || null},
+      github   = ${formData.get("github") || null},
+      linkedin = ${formData.get("linkedin") || null},
+      telegram = ${formData.get("telegram") || null},
+      twitter  = ${formData.get("twitter") || null}
+    WHERE id = 1
+  `;
+  revalidatePath("/");
+  revalidatePath("/admin/contact");
+}

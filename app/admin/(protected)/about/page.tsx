@@ -3,7 +3,7 @@ import { updateAbout } from "@/app/actions/resume";
 import { AdminSection, ArrayField } from "@components/ui/";
 
 export default async function AboutPage() {
-  const [about] = await sql`SELECT * FROM about WHERE id = 1` as any[];
+  const [about] = await sql`SELECT * FROM about WHERE id = 1`;
 
   return (
     <div className="space-y-8">
@@ -15,11 +15,10 @@ export default async function AboutPage() {
             name="paragraphs"
             label="Paragraphs (one per line — each line becomes a paragraph)"
             defaultValue={about.paragraphs}
-            rows={8}
           />
           <button
             type="submit"
-            className="rounded-lg bg-foreground px-4 py-1.5 text-sm text-background hover:opacity-75 transition-opacity"
+            className="bg-foreground text-background rounded-lg px-4 py-1.5 text-sm transition-opacity hover:opacity-75"
           >
             Save
           </button>

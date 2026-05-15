@@ -73,9 +73,9 @@ export function ExperienceItem({
 
         {/* Stack pills */}
         <div className="flex flex-wrap gap-1.5">
-          {experience.stack.map((tech) => (
+          {experience.stack.map((tech, i) => (
             <span
-              key={tech}
+              key={tech + i}
               className="bg-foreground/4 text-foreground/60 group-hover:bg-foreground/6 group-hover:text-foreground/75 rounded-md px-2 py-0.5 font-mono text-[10px] transition-colors duration-300"
             >
               {tech}

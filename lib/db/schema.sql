@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS projects (
   responsibilities TEXT[] NOT NULL DEFAULT '{}',
   stack TEXT[] NOT NULL DEFAULT '{}',
   tags TEXT[] NOT NULL DEFAULT '{}',
+  url TEXT,
+  image_url TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 

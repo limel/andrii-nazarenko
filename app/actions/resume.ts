@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { sql } from "@/lib/db";
 import { requireSession } from "@/lib/session";
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -74,16 +76,31 @@ export async function moveExperience(id: number, direction: "up" | "down") {
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
+async function saveProjectImage(file: File): Promise<string> {
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const ext = file.name.split(".").pop() ?? "jpg";
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const dir = path.join(process.cwd(), "public", "projects");
+  await mkdir(dir, { recursive: true });
+  await writeFile(path.join(dir, filename), buffer);
+  return `/projects/${filename}`;
+}
+
 export async function createProject(formData: FormData) {
   await requireSession();
+  const imageFile = formData.get("image") as File | null;
+  const imageUrl = imageFile?.size ? await saveProjectImage(imageFile) : null;
   await sql`
-    INSERT INTO projects (name, description, responsibilities, stack, tags, sort_order)
+    INSERT INTO projects (name, description, responsibilities, stack, tags, url, image_url, sort_order)
     VALUES (
       ${formData.get("name")},
       ${formData.get("description")},
       ${parseLines(formData.get("responsibilities"))},
       ${parseLines(formData.get("stack"))},
       ${parseLines(formData.get("tags"))},
+      ${formData.get("url") || null},
+      ${imageUrl},
       (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM projects)
     )
   `;
@@ -93,15 +110,32 @@ export async function createProject(formData: FormData) {
 
 export async function updateProject(id: number, formData: FormData) {
   await requireSession();
-  await sql`
-    UPDATE projects SET
-      name = ${formData.get("name")},
-      description = ${formData.get("description")},
-      responsibilities = ${parseLines(formData.get("responsibilities"))},
-      stack = ${parseLines(formData.get("stack"))},
-      tags = ${parseLines(formData.get("tags"))}
-    WHERE id = ${id}
-  `;
+  const imageFile = formData.get("image") as File | null;
+  const newImageUrl = imageFile?.size ? await saveProjectImage(imageFile) : null;
+  if (newImageUrl) {
+    await sql`
+      UPDATE projects SET
+        name = ${formData.get("name")},
+        description = ${formData.get("description")},
+        responsibilities = ${parseLines(formData.get("responsibilities"))},
+        stack = ${parseLines(formData.get("stack"))},
+        tags = ${parseLines(formData.get("tags"))},
+        url = ${formData.get("url") || null},
+        image_url = ${newImageUrl}
+      WHERE id = ${id}
+    `;
+  } else {
+    await sql`
+      UPDATE projects SET
+        name = ${formData.get("name")},
+        description = ${formData.get("description")},
+        responsibilities = ${parseLines(formData.get("responsibilities"))},
+        stack = ${parseLines(formData.get("stack"))},
+        tags = ${parseLines(formData.get("tags"))},
+        url = ${formData.get("url") || null}
+      WHERE id = ${id}
+    `;
+  }
   revalidatePath("/");
   revalidatePath("/admin/projects");
 }
@@ -109,6 +143,18 @@ export async function updateProject(id: number, formData: FormData) {
 export async function deleteProject(id: number) {
   await requireSession();
   await sql`DELETE FROM projects WHERE id = ${id}`;
+  revalidatePath("/");
+  revalidatePath("/admin/projects");
+}
+
+export async function moveProject(id: number, direction: "up" | "down") {
+  await requireSession();
+  const rows = await sql`SELECT id FROM projects ORDER BY sort_order, id`;
+  const idx = rows.findIndex((r) => r.id === id);
+  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= rows.length) return;
+  await sql`UPDATE projects SET sort_order = ${swapIdx} WHERE id = ${rows[idx].id}`;
+  await sql`UPDATE projects SET sort_order = ${idx} WHERE id = ${rows[swapIdx].id}`;
   revalidatePath("/");
   revalidatePath("/admin/projects");
 }

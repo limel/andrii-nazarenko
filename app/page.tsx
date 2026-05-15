@@ -3,7 +3,6 @@ import About from "@components/sections/about";
 import Expertise from "@components/sections/expertise";
 import Experience from "@components/sections/experience";
 import Projects from "@components/sections/projects";
-import CaseStudies from "@components/sections/case-studies";
 import TechStack from "@components/sections/tech-stack";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         <Expertise />
         <Experience />
         <Projects />
-        <CaseStudies />
         <TechStack />
       </main>
     </div>

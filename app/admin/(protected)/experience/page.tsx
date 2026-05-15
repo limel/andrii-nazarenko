@@ -1,5 +1,5 @@
 import { sql } from "@/lib/db";
-import { createExperience, updateExperience, deleteExperience } from "@/app/actions/resume";
+import { createExperience, updateExperience, deleteExperience, moveExperience } from "@/app/actions/resume";
 import { AdminSection, Field, ArrayField, DeleteButton } from "@components/ui/";
 
 export default async function ExperiencePage() {
@@ -13,7 +13,7 @@ export default async function ExperiencePage() {
 
       {/* Existing entries */}
       <div className="space-y-4">
-        {rows.map((exp) => (
+        {rows.map((exp, i) => (
           <AdminSection key={exp.id} title={exp.company}>
             <form
               action={async (fd) => {
@@ -60,6 +60,24 @@ export default async function ExperiencePage() {
                     await deleteExperience(exp.id);
                   }}
                 />
+                <form action={async () => { "use server"; await moveExperience(exp.id, "up"); }}>
+                  <button
+                    type="submit"
+                    disabled={i === 0}
+                    className="rounded-lg border border-foreground/15 px-3 py-1.5 text-sm transition-opacity hover:opacity-75 disabled:opacity-25"
+                  >
+                    ↑
+                  </button>
+                </form>
+                <form action={async () => { "use server"; await moveExperience(exp.id, "down"); }}>
+                  <button
+                    type="submit"
+                    disabled={i === rows.length - 1}
+                    className="rounded-lg border border-foreground/15 px-3 py-1.5 text-sm transition-opacity hover:opacity-75 disabled:opacity-25"
+                  >
+                    ↓
+                  </button>
+                </form>
               </div>
             </form>
           </AdminSection>

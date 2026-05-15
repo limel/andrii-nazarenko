@@ -60,6 +60,18 @@ export async function deleteExperience(id: number) {
   revalidatePath("/admin/experience");
 }
 
+export async function moveExperience(id: number, direction: "up" | "down") {
+  await requireSession();
+  const rows = await sql`SELECT id FROM experiences ORDER BY sort_order, id`;
+  const idx = rows.findIndex((r) => r.id === id);
+  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= rows.length) return;
+  await sql`UPDATE experiences SET sort_order = ${swapIdx} WHERE id = ${rows[idx].id}`;
+  await sql`UPDATE experiences SET sort_order = ${idx} WHERE id = ${rows[swapIdx].id}`;
+  revalidatePath("/");
+  revalidatePath("/admin/experience");
+}
+
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
 export async function createProject(formData: FormData) {

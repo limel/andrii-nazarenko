@@ -30,6 +30,7 @@ export default async function ProjectsPage() {
                   required
                 />
                 <Field name="url" label="URL" defaultValue={proj.url ?? ""} />
+                <Field name="impact" label="Impact" defaultValue={proj.impact ?? ""} textarea />
                 <ArrayField
                   name="responsibilities"
                   label="Responsibilities (one per line)"
@@ -102,6 +103,7 @@ export default async function ProjectsPage() {
           <Field name="name" label="Name" required />
           <Field name="description" label="Description" textarea required />
           <Field name="url" label="URL" />
+          <Field name="impact" label="Impact" textarea />
           <ArrayField name="responsibilities" label="Responsibilities (one per line)" />
           <ArrayField name="stack" label="Stack (one per line)" />
           <ArrayField name="tags" label="Tags (one per line)" />

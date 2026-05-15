@@ -92,7 +92,7 @@ export async function createProject(formData: FormData) {
   const imageFile = formData.get("image") as File | null;
   const imageUrl = imageFile?.size ? await saveProjectImage(imageFile) : null;
   await sql`
-    INSERT INTO projects (name, description, responsibilities, stack, tags, url, image_url, sort_order)
+    INSERT INTO projects (name, description, responsibilities, stack, tags, url, image_url, impact, sort_order)
     VALUES (
       ${formData.get("name")},
       ${formData.get("description")},
@@ -101,6 +101,7 @@ export async function createProject(formData: FormData) {
       ${parseLines(formData.get("tags"))},
       ${formData.get("url") || null},
       ${imageUrl},
+      ${formData.get("impact") || null},
       (SELECT COALESCE(MAX(sort_order), 0) + 1 FROM projects)
     )
   `;
@@ -121,7 +122,8 @@ export async function updateProject(id: number, formData: FormData) {
         stack = ${parseLines(formData.get("stack"))},
         tags = ${parseLines(formData.get("tags"))},
         url = ${formData.get("url") || null},
-        image_url = ${newImageUrl}
+        image_url = ${newImageUrl},
+        impact = ${formData.get("impact") || null}
       WHERE id = ${id}
     `;
   } else {
@@ -132,7 +134,8 @@ export async function updateProject(id: number, formData: FormData) {
         responsibilities = ${parseLines(formData.get("responsibilities"))},
         stack = ${parseLines(formData.get("stack"))},
         tags = ${parseLines(formData.get("tags"))},
-        url = ${formData.get("url") || null}
+        url = ${formData.get("url") || null},
+        impact = ${formData.get("impact") || null}
       WHERE id = ${id}
     `;
   }

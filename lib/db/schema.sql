@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS projects (
   tags TEXT[] NOT NULL DEFAULT '{}',
   url TEXT,
   image_url TEXT,
+  impact TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 

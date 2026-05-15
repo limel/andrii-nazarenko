@@ -10,6 +10,7 @@ type Project = {
   tags: string[];
   url: string | null;
   image_url: string | null;
+  impact: string | null;
 };
 
 function ProjectCard({ project }: { project: Project }) {
@@ -65,6 +66,12 @@ function ProjectCard({ project }: { project: Project }) {
           </li>
         ))}
       </ul>
+
+      {project.impact && (
+        <p className="text-foreground/60 border-foreground/8 border-l-2 pl-3 text-xs leading-relaxed italic">
+          {project.impact}
+        </p>
+      )}
 
       <div className="mt-auto space-y-3">
         {/* Stack */}

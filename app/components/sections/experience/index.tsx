@@ -11,7 +11,7 @@ export default async function Experience() {
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Professional Experience</h2>
         <p className="text-foreground/85 text-sm">
-          Building frontend applications for marketplaces, product platforms, and modern web
+          Building software applications for marketplaces, product platforms, and modern web
           experiences.
         </p>
       </div>

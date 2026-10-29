@@ -40,7 +40,7 @@ export default async function Expertise() {
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Core Expertise</h2>
         <p className="text-foreground/85 text-sm">
-          Building scalable web products, from frontend architecture and reusable UI systems to
+          Building scalable web products, from software architecture and reusable UI systems to
           backend APIs and integrations.
         </p>
       </div>

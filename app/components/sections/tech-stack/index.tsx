@@ -36,7 +36,7 @@ export default async function TechStack() {
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Tech Stack</h2>
         <p className="text-sm text-foreground/85">
-          Technologies and tools used for building scalable, modern frontend applications.
+          Technologies and tools used for building scalable, modern software applications.
         </p>
       </div>
 

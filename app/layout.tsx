@@ -10,9 +10,9 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Andrii Nazarenko - Frontend Engineer",
+  title: "Andrii Nazarenko - Software Engineer",
   description:
-    "Resume of Andrii Nazarenko, a frontend engineer specializing in building scalable systems for modern product applications.",
+    "Resume of Andrii Nazarenko, a software engineer specializing in building scalable systems for modern product applications.",
 };
 
 export default function RootLayout({

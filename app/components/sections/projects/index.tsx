@@ -133,7 +133,7 @@ export default async function Projects() {
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Projects</h2>
         <p className="text-foreground/65 text-sm">
-          Selected frontend projects focused on scalable architecture, product development, and
+          Selected software projects focused on scalable architecture, product development, and
           modern user experiences.
         </p>
       </div>

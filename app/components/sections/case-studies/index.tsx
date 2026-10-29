@@ -12,7 +12,7 @@ export default async function CaseStudies() {
         <h2 className="text-2xl font-medium md:text-3xl">Case Studies</h2>
         <p className="text-foreground/85 text-sm">
           Selected engineering challenges focused on scalability, maintainability, and
-          product-oriented frontend architecture.
+          product-oriented software architecture.
         </p>
       </div>
 

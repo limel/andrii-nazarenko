@@ -10,8 +10,8 @@ type ExpertiseCard = {
 
 function ExpertiseCard({ card }: { card: ExpertiseCard }) {
   return (
-    <div className="group flex flex-col gap-3 rounded-xl border border-foreground/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-foreground/20 hover:bg-foreground/2">
-      <span className="text-foreground/50 transition-colors duration-300 group-hover:text-foreground/80">
+    <div className="group border-foreground/10 hover:border-foreground/20 hover:bg-foreground/2 flex flex-col gap-3 rounded-xl border p-5 transition-all duration-300 hover:-translate-y-0.5">
+      <span className="text-foreground/50 group-hover:text-foreground/80 transition-colors duration-300">
         <svg
           width="18"
           height="18"
@@ -25,7 +25,7 @@ function ExpertiseCard({ card }: { card: ExpertiseCard }) {
         />
       </span>
       <h3 className="text-base font-medium tracking-tight">{card.title}</h3>
-      <p className="text-xs leading-relaxed text-foreground/85">{card.description}</p>
+      <p className="text-foreground/85 text-xs leading-relaxed">{card.description}</p>
     </div>
   );
 }
@@ -39,8 +39,9 @@ export default async function Expertise() {
     <section id="expertise" className="mx-auto w-full space-y-8 py-6 md:py-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-medium md:text-3xl">Core Expertise</h2>
-        <p className="text-sm text-foreground/85">
-          Building scalable frontend systems for modern product applications.
+        <p className="text-foreground/85 text-sm">
+          Building scalable web products, from frontend architecture and reusable UI systems to
+          backend APIs and integrations.
         </p>
       </div>
 
